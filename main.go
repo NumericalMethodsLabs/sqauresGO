@@ -46,10 +46,11 @@ func main() {
 	g := make([][]float64, 0)
 	d := make([]float64, 0)
 
+	//матрица Грамма
 	for k := 0; k < n+1; k++ {
 		gSec := make([]float64, n+1)
 		for j := 0; j < n+1; j++ {
-			gSec[j] = func(a []float64, j, k float64) float64 {
+			gSec[j] = func(a []float64, j, k float64) float64 { //сумма x^(j+k)
 				sum := 0.0
 				for _, val := range a {
 					sum += math.Pow(val, j+k)
@@ -59,7 +60,7 @@ func main() {
 
 		}
 		g = append(g, gSec)
-		d = append(d, func(a, f []float64, k float64) float64 {
+		d = append(d, func(a, f []float64, k float64) float64 { //сумма f* x^(k)
 			sum := 0.0
 			for i, _ := range a {
 				sum += f[i] * math.Pow(a[i], k)
@@ -67,7 +68,7 @@ func main() {
 			return sum
 		}(x, f, float64(k)))
 	}
-
+	//Подсчет матрицы
 	a := Execute(g, d)
 	Q := 0.0
 	for i := 0; i < m+1; i++ {
